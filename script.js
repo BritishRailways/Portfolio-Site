@@ -58,6 +58,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Improve mobile performance and iOS PDF compatibility.
+document.addEventListener('DOMContentLoaded', function() {
+    const allImgs = document.querySelectorAll('img');
+    allImgs.forEach((img, idx) => {
+        if (!img.hasAttribute('loading')) {
+            img.setAttribute('loading', idx < 2 ? 'eager' : 'lazy');
+        }
+    });
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (!isIOS) return;
+
+    document.querySelectorAll('.pdf-embed').forEach(embed => {
+        embed.style.display = 'none';
+    });
+    document.querySelectorAll('.pdf-ios-note').forEach(note => {
+        note.style.display = 'block';
+    });
+});
+
 // Home Gallery Rotator (cycle through all images in /images, no repeats, with fade)
 document.addEventListener('DOMContentLoaded', function() {
     const galleryImgs = document.querySelectorAll('.home-gallery .gallery-img');
