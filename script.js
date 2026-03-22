@@ -59,6 +59,45 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Toggle sound for looped project videos.
+document.addEventListener('DOMContentLoaded', function() {
+    const videoBlocks = document.querySelectorAll('.project-video-wrap');
+    videoBlocks.forEach(block => {
+        const video = block.querySelector('video');
+        const toggle = block.querySelector('.video-audio-toggle');
+        if (!video || !toggle) return;
+
+        function syncLabel() {
+            const soundOn = !video.muted;
+            toggle.textContent = soundOn ? 'Mute Sound' : 'Turn Sound On';
+            toggle.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
+            toggle.setAttribute('aria-label', soundOn ? 'Mute sound' : 'Turn sound on');
+            toggle.classList.toggle('sound-on', soundOn);
+        }
+
+        // Some browsers need JS-set flags plus an explicit play() call.
+        video.autoplay = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.muted = true;
+        video.setAttribute('muted', '');
+        video.play().catch(() => {
+            // If autoplay is blocked, user can still start playback by interaction.
+        });
+        syncLabel();
+
+        toggle.addEventListener('click', function() {
+            video.muted = !video.muted;
+            if (!video.muted) {
+                video.play().catch(() => {
+                    video.muted = true;
+                });
+            }
+            syncLabel();
+        });
+    });
+});
+
 // Improve mobile performance and iOS PDF compatibility.
 document.addEventListener('DOMContentLoaded', function() {
     const allImgs = document.querySelectorAll('img');
