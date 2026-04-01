@@ -1,47 +1,108 @@
-// Animated wipe/typing effect for KaiBaisley.com
+// Split-flap style title effect for KaiBaisley.com.
 document.addEventListener('DOMContentLoaded', function() {
     const title = document.getElementById('site-title');
     if (!title) return;
+
     const fullText = 'KaiBaisley.com';
-    let showing = true;
-    function wipeOut(callback) {
-        let i = fullText.length;
-        function step() {
-            if (i >= 0) {
-                title.textContent = fullText.slice(0, i);
-                i--;
-                setTimeout(step, 40);
-            } else {
-                callback();
-            }
-        }
-        step();
+    title.classList.add('splitflap-title');
+    title.setAttribute('aria-label', fullText);
+    title.textContent = '';
+
+    const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const chars = [];
+
+    function createFace(className, ch) {
+        const face = document.createElement('span');
+        face.className = className;
+        const text = document.createElement('span');
+        text.className = 'splitflap-text';
+        text.textContent = ch === ' ' ? '\u00A0' : ch;
+        face.appendChild(text);
+        return face;
     }
-    function typeIn(callback) {
-        let i = 0;
-        function step() {
-            if (i <= fullText.length) {
-                title.textContent = fullText.slice(0, i);
-                i++;
-                setTimeout(step, 60);
-            } else {
-                callback();
-            }
-        }
-        step();
+
+    for (const ch of fullText) {
+        const cell = document.createElement('span');
+        cell.className = 'splitflap-char';
+        cell.dataset.char = ch;
+        cell.dataset.display = ch;
+
+        const top = createFace('splitflap-top', ch);
+        const bottom = createFace('splitflap-bottom', ch);
+        const flipTop = createFace('splitflap-flip-top', ch);
+        const flipBottom = createFace('splitflap-flip-bottom', ch);
+
+        cell.appendChild(top);
+        cell.appendChild(bottom);
+        cell.appendChild(flipTop);
+        cell.appendChild(flipBottom);
+
+        title.appendChild(cell);
+        chars.push(cell);
     }
-    function animateLoop() {
+
+    let isAnimating = false;
+
+    function setFaceChars(cell, ch) {
+        const visible = ch === ' ' ? '\u00A0' : ch;
+        cell.querySelector('.splitflap-top .splitflap-text').textContent = visible;
+        cell.querySelector('.splitflap-bottom .splitflap-text').textContent = visible;
+        cell.dataset.display = ch;
+    }
+
+    function randomScrambleChar() {
+        const idx = Math.floor(Math.random() * scrambleChars.length);
+        return scrambleChars[idx];
+    }
+
+    function flipToChar(cell, nextChar, delay) {
         setTimeout(() => {
-            wipeOut(() => {
-                setTimeout(() => {
-                    typeIn(() => {
-                        animateLoop();
-                    });
-                }, 400);
-            });
-        }, 4000);
+            const current = cell.dataset.display || ' ';
+            const flipTopText = cell.querySelector('.splitflap-flip-top .splitflap-text');
+            const flipBottomText = cell.querySelector('.splitflap-flip-bottom .splitflap-text');
+
+            flipTopText.textContent = current === ' ' ? '\u00A0' : current;
+            flipBottomText.textContent = nextChar === ' ' ? '\u00A0' : nextChar;
+
+            cell.classList.remove('flipping');
+            void cell.offsetWidth;
+            cell.classList.add('flipping');
+
+            setTimeout(() => {
+                setFaceChars(cell, nextChar);
+            }, 130);
+
+            setTimeout(() => {
+                cell.classList.remove('flipping');
+            }, 290);
+        }, delay);
     }
-    animateLoop();
+
+    function runSplitFlapCycle() {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        chars.forEach((cell, idx) => {
+            const stepDelay = idx * 85;
+            const originalChar = cell.dataset.char || ' ';
+
+            for (let spin = 0; spin < 4; spin++) {
+                flipToChar(cell, randomScrambleChar(), stepDelay + spin * 220);
+            }
+
+            flipToChar(cell, originalChar, stepDelay + 4 * 220);
+        });
+
+        const totalDuration = (chars.length - 1) * 85 + 4 * 220 + 520;
+        setTimeout(() => {
+            isAnimating = false;
+        }, totalDuration);
+    }
+
+    setTimeout(() => {
+        runSplitFlapCycle();
+        setInterval(runSplitFlapCycle, 9000);
+    }, 3200);
 });
 // Gallery card click-to-show detail info
 document.addEventListener('DOMContentLoaded', function() {
@@ -138,7 +199,6 @@ document.addEventListener('DOMContentLoaded', function() {
             "images/EATM.JPG",
             "images/1858.jpg",
             "images/1201.JPG",
-            "images/Arkwright-certificate.JPG",
             "images/NNR.JPG",
             "images/TFLR.jpg",
             "images/W&RR.jpg"
