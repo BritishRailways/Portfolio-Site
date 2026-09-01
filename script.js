@@ -1,9 +1,9 @@
-// Split-flap style title effect for KaiBaisley.com.
+// Split-flap style title effect for KaiBaisley.co.uk.
 document.addEventListener('DOMContentLoaded', function() {
     const title = document.getElementById('site-title');
     if (!title) return;
 
-    const fullText = 'KaiBaisley.com';
+    const fullText = 'KaiBaisley.co.uk';
     title.classList.add('splitflap-title');
     title.setAttribute('aria-label', fullText);
     title.textContent = '';
