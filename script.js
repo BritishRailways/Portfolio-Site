@@ -207,16 +207,13 @@ document.addEventListener('DOMContentLoaded', function() {
             "images/DT.JPG",
             "images/EATM-terminus.JPG",
             "images/EATM-terminus2.JPG",
-            "images/TFLR2.JPG",
             "images/Golf_show1.jpg",
             "images/Golf_show2.jpg",
             "images_other/Golf5.jpg",
             "images_other/Golf6.jpg",
             "images_other/Golf7.jpg",
             "images/RTL.JPG",
-            "images/TFLR1.JPG",
             "images_other/NNR4.JPG",
-            "images_other/NNR5.JPG",
             "images_other/NNR6.JPG",
             "images_other/NNR7.JPG",
             "images_other/NNR8.JPG"
@@ -271,12 +268,16 @@ if (canvas) {
     const LINE_DIST = 250;
     const MOUSE_RADIUS = 120;
     let mouse = { x: null, y: null };
+    const dpr = window.devicePixelRatio || 1;
 
     function resizeCanvas() {
         width = window.innerWidth;
         height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.scale(dpr, dpr);
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
@@ -349,7 +350,7 @@ if (canvas) {
                 if (dist < MOUSE_RADIUS) {
                     // Push away from mouse
                     const angle = Math.atan2(dy, dx);
-                    const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS * 2.5;
+                    const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS * 1.5;
                     p.vx += Math.cos(angle) * force * 0.08;
                     p.vy += Math.sin(angle) * force * 0.08;
                 }
