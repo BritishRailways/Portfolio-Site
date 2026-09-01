@@ -2,7 +2,7 @@
 #site-title {
     display: inline-flex;
     align-items: center;
-    font-family: 'Consolas', 'Fira Mono', 'Menlo', monospace;
+    font-family: 'Cambria', 'Georgia', serif;
     letter-spacing: 0.02em;
     font-weight: 700;
     font-size: 2.2rem;
@@ -403,8 +403,12 @@ body > *:not(#bg-particles) {
     font-size: 1rem;
     color: #b0b0b0;
 }
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cambria', 'Georgia', serif;
+}
+
 body {
-    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Source Sans Pro', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background: #181a20;
