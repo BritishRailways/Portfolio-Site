@@ -201,7 +201,26 @@ document.addEventListener('DOMContentLoaded', function() {
             "images/1201.JPG",
             "images/NNR.JPG",
             "images/TFLR.jpg",
-            "images/W&RR.jpg"
+            "images/W&RR.jpg",
+            "images/474.JPG",
+            "images/Controller assembled.JPG",
+            "images/DT.JPG",
+            "images/EATM-terminus.JPG",
+            "images/EATM-terminus2.JPG",
+            "images/TFLR2.JPG",
+            "images/Golf_show1.jpg",
+            "images/Golf_show2.jpg",
+            "images_other/Golf5.jpg",
+            "images_other/Golf6.jpg",
+            "images_other/Golf7.jpg",
+            "images/RTL.JPG",
+            "images/TFLR1.JPG",
+            "images_other/NNR4.JPG",
+            "images_other/NNR5.JPG",
+            "images_other/NNR6.JPG",
+            "images_other/NNR7.JPG",
+            "images_other/NNR8.JPG"
+
         ];
         // Start with 4 unique random images
         let current = [];
