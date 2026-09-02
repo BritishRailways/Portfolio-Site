@@ -203,20 +203,20 @@ document.addEventListener('DOMContentLoaded', function() {
             "images/TFLR.jpg",
             "images/W&RR.jpg",
             "images/474.JPG",
-            "images/Controller assembled.JPG",
-            "images/DT.JPG",
-            "images/EATM-terminus.JPG",
-            "images/EATM-terminus2.JPG",
+            "images/Controller assembled.jpg",
+            "images/DT.jpg",
+            "images/EATM-terminus.jpg",
+            "images/EATM-terminus2.jpg",
             "images/Golf_show1.jpg",
             "images/Golf_show2.jpg",
             "images_other/Golf5.jpg",
             "images_other/Golf6.jpg",
             "images_other/Golf7.jpg",
-            "images/RTL.JPG",
-            "images_other/NNR4.JPG",
-            "images_other/NNR6.JPG",
-            "images_other/NNR7.JPG",
-            "images_other/NNR8.JPG"
+            "images/RTL.jpg",
+            "images_other/NNR4.jpg",
+            "images_other/NNR6.jpg",
+            "images_other/NNR7.jpg",
+            "images_other/NNR8.jpg"
 
         ];
         // Start with 4 unique random images
